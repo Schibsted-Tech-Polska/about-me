@@ -2,3 +2,11 @@ language: node_js
 node_js:
 - '0.12'
 - '0.10'
+deploy:
+  provider: npm
+  email: kwasniewski.mateusz@gmail.com
+  api_key:
+    secure: WIGg3v8gUyKbsVN04LvtR2lapCskYVBT3IhROuCvrHMePyASWa6/BIs6ulx4Cn0fdqmXjo0KcW4lLE2BPXuf4n5yaIdqH/WpSIDXD7JWz/EpCOA30GLHWNnoCFVe4TJuo84Uw0H9sTjzUhpUjWavcEcg+xOSCkFPBYYLUl0cWS8=
+  on:
+    tags: true
+    repo: Schibsted-Tech-Polska/about-me
