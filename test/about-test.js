@@ -9,7 +9,7 @@ var about = require('../lib/about');
 describe('About me', function() {
 	it('should expose explicit info params', function() {
 		var params = {url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'};
-		var handler = about(params);
+		var handler = about('', params);
 		var res = { 
 			content: '',
 			json: function(resContent) {
@@ -24,7 +24,7 @@ describe('About me', function() {
 
 	it('should fill in missing static params with information from package.json', function() {
 		var params = {url: 'http://example.com'};
-		var handler = about(params);
+		var handler = about(__dirname + '/../package.json', params);
 		var res = { 
 			content: '',
 			json: function(resContent) {
@@ -42,7 +42,7 @@ describe('About me', function() {
 		process.env.NODE_ENV = 'production';
 		process.env.LOGGING = 'http://logging.com';
 		process.env.MONITORING = 'http://monitoring.com';
-        var handler = about();
+        var handler = about(__dirname + '/../package.json');
 
 		var res = { 
 			content: '',
