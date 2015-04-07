@@ -19,6 +19,21 @@ describe('About me', function() {
 
 		handler({}, res);
 
-		assert.equal(params, res.content);
+		assert.deepEqual(params, res.content);
+	});
+
+	it('should fill in missing static params with information from package.json', function() {
+		var params = {url: 'http://example.com'};
+		var handler = about(params);
+		var res = { 
+			content: '',
+			json: function(resContent) {
+				this.content = resContent;
+			}
+		}
+
+		handler({}, res);
+
+		assert.deepEqual({url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'}, res.content);
 	});
 });
