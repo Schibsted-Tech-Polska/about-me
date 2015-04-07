@@ -19,7 +19,7 @@ describe('About me', function() {
 
 		handler({}, res);
 
-		assert.deepEqual(params, res.content);
+		assert.deepEqual(res.content, params);
 	});
 
 	it('should fill in missing static params with information from package.json', function() {
@@ -34,6 +34,29 @@ describe('About me', function() {
 
 		handler({}, res);
 
-		assert.deepEqual({url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'}, res.content);
+		assert.deepEqual(res.content, {url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'});
+	});
+
+	it('should use env variables to read env specific params', function() {
+		process.env.DEFAULT_HOST = 'http://example.com';
+		process.env.NODE_ENV = 'production';
+		process.env.LOGGING = 'http://logging.com';
+		process.env.MONITORING = 'http://monitoring.com';
+        var handler = about();
+
+		var res = { 
+			content: '',
+			json: function(resContent) {
+				this.content = resContent;
+			}
+		}
+
+		handler({}, res);
+
+		assert.deepEqual(res.content, {url: 'http://example.com',
+						  repo: 'github.com/Schibsted-Tech-Polska/about-me',
+						  env: 'production',
+						  logging: 'http://logging.com',
+						  monitoring: 'http://monitoring.com'});
 	});
 });
