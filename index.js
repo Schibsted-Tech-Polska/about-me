@@ -1,1 +1,1 @@
-module.exports = require('./lib/tracing');
+module.exports = require('./lib/about');
