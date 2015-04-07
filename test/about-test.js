@@ -15,7 +15,7 @@ describe('About me', function() {
 			json: function(resContent) {
 				this.content = resContent;
 			}
-		}
+		};
 
 		handler({}, res);
 
@@ -30,7 +30,7 @@ describe('About me', function() {
 			json: function(resContent) {
 				this.content = resContent;
 			}
-		}
+		};
 
 		handler({}, res);
 
@@ -49,7 +49,7 @@ describe('About me', function() {
 			json: function(resContent) {
 				this.content = resContent;
 			}
-		}
+		};
 
 		handler({}, res);
 
