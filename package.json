@@ -1,6 +1,6 @@
 {
   "name": "about-me",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Self-introduction express route",
   "main": "index.js",
   "scripts": {
