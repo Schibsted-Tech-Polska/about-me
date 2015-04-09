@@ -7,15 +7,20 @@ var assert = require('assert');
 var about = require('../lib/about');
 
 describe('About me', function() {
-	it('should expose explicit info params', function() {
+    var res;
+
+    beforeEach(function(){
+        res = {
+            content: '',
+            json: function(resContent) {
+                this.content = resContent;
+            }
+        };
+    });
+
+    it('should expose explicit info params', function() {
 		var params = {url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'};
 		var handler = about('', params);
-		var res = { 
-			content: '',
-			json: function(resContent) {
-				this.content = resContent;
-			}
-		};
 
 		handler({}, res);
 
@@ -25,12 +30,6 @@ describe('About me', function() {
 	it('should fill in missing static params with information from package.json', function() {
 		var params = {url: 'http://example.com'};
 		var handler = about(__dirname + '/../package.json', params);
-		var res = { 
-			content: '',
-			json: function(resContent) {
-				this.content = resContent;
-			}
-		};
 
 		handler({}, res);
 
@@ -39,24 +38,25 @@ describe('About me', function() {
 
 	it('should use env variables to read env specific params', function() {
 		process.env.DEFAULT_HOST = 'http://example.com';
-		process.env.NODE_ENV = 'production';
 		process.env.LOGGING = 'http://logging.com';
 		process.env.MONITORING = 'http://monitoring.com';
         var handler = about(__dirname + '/../package.json');
-
-		var res = { 
-			content: '',
-			json: function(resContent) {
-				this.content = resContent;
-			}
-		};
 
 		handler({}, res);
 
 		assert.deepEqual(res.content, {url: 'http://example.com',
 						  repo: 'github.com/Schibsted-Tech-Polska/about-me',
-						  env: 'production',
 						  logging: 'http://logging.com',
 						  monitoring: 'http://monitoring.com'});
 	});
+
+    it('should register itself in humane registry at init time with POST hook', function(done) {
+        var params = {url: 'http://example.com', registry: 'http://registry.com?url=http%3A%2F%2Fexample.com'};
+        var handler = about('', params, function(hookUrl) {
+            assert.deepEqual(hookUrl, 'http://registry.com?url=http%3A%2F%2Fexample.com');
+            done()
+        });
+
+        handler({}, res);
+    });
 });
