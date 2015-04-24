@@ -13,6 +13,9 @@ describe('About me', function() {
             content: '',
             json: function(resContent) {
                 this.content = resContent;
+            },
+            send: function(resContent) {
+                this.content = resContent;
             }
         };
     });
@@ -25,6 +28,21 @@ describe('About me', function() {
 
 		assert.deepEqual(res.content, params);
 	});
+
+    it('shoudl be able to render response as HTML', function() {
+		var params = {url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'};
+		var handler = about(params).html;
+        var urlHTML = '<dt>url</dt><dd>http://example.com</dd>';
+        var repoHTML = '<dt>repo</dt><dd>github.com/Schibsted-Tech-Polska/about-me</dd>';
+        var wrapHTML = '<dl></dl>';
+
+		handler({}, res);
+
+        assert.ok(res.content.indexOf(urlHTML) > -1);
+        assert.ok(res.content.indexOf(urlHTML) > -1);
+
+		assert.deepEqual(res.content.length, urlHTML.length + repoHTML.length + wrapHTML.length);
+    });
 
 	it('should fill in missing static params with information from package.json', function() {
 		var params = {url: 'http://example.com'};
