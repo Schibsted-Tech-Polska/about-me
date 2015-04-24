@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var about = require('../lib/about.js');
 var app = express();

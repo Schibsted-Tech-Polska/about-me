@@ -1,4 +1,3 @@
-/* jshint node:true, quotmark:false */
 /* global describe, it, beforeEach, afterEach */
 
 'use strict';
