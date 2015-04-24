@@ -4,7 +4,7 @@ var express = require('express');
 var about = require('../lib/about.js');
 var app = express();
 
-app.get('/', about());
+app.get('/', about().json);
 
 var server = app.listen(3000, function () {
   var host = server.address().address;

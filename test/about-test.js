@@ -19,7 +19,7 @@ describe('About me', function() {
 
     it('should expose explicit info params', function() {
 		var params = {url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'};
-		var handler = about(params);
+		var handler = about(params).json;
 
 		handler({}, res);
 
@@ -28,7 +28,7 @@ describe('About me', function() {
 
 	it('should fill in missing static params with information from package.json', function() {
 		var params = {url: 'http://example.com'};
-		var handler = about(params);
+		var handler = about(params).json;
 
 		handler({}, res);
 
@@ -39,7 +39,7 @@ describe('About me', function() {
 		process.env.DEFAULT_HOST = 'http://example.com';
 		process.env.LOGGING = 'http://logging.com';
 		process.env.MONITORING = 'http://monitoring.com';
-        var handler = about();
+        var handler = about().json;
 
 		handler({}, res);
 
@@ -54,7 +54,7 @@ describe('About me', function() {
         var handler = about(params, function(hookUrl) {
             assert.deepEqual(hookUrl, 'http://registry.com?url=http%3A%2F%2Fexample.com');
             done();
-        });
+        }).json;
 
         handler({}, res);
     });
