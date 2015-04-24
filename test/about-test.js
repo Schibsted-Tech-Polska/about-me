@@ -67,13 +67,13 @@ describe('About me', function() {
 						  monitoring: 'http://monitoring.com'});
 	});
 
-    it('should register itself in humane registry at init time with POST hook', function(done) {
+    it('should expose a method to register itself in humane registry', function(done) {
         var params = {url: 'http://example.com', registry: 'http://registry.com?url=http%3A%2F%2Fexample.com'};
-        var handler = about(params, function(hookUrl) {
+        var register = about(params, function(hookUrl) {
             assert.deepEqual(hookUrl, 'http://registry.com?url=http%3A%2F%2Fexample.com');
             done();
-        }).json;
+        }).register;
 
-        handler({}, res);
+        register();
     });
 });
