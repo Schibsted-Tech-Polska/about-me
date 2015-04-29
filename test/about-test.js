@@ -59,7 +59,7 @@ describe('About me', function() {
 
 		handler({}, res);
 
-		assert.deepEqual(res.content, {url: 'http://example.com', repo: '<a href="github.com/Schibsted-Tech-Polska/about-me">git</a>'});
+		assert.deepEqual(res.content, {url: 'http://example.com', repo: '<a href="//github.com/Schibsted-Tech-Polska/about-me">git</a>'});
 	});
 
 	it('should use env variables to read env specific params', function() {
@@ -71,10 +71,21 @@ describe('About me', function() {
 		handler({}, res);
 
 		assert.deepEqual(res.content, {url: '<a href="http://example.com">about-me</a>',
-						  repo: '<a href="github.com/Schibsted-Tech-Polska/about-me">git</a>',
+						  repo: '<a href="//github.com/Schibsted-Tech-Polska/about-me">git</a>',
                           logging: '<a href="http://logging.com">http://logging.com</a>',
 						  monitoring: '<a href="http://monitoring.com">http://monitoring.com</a>'});
 	});
+
+    it('should fix link in case of absent protocol', function() {
+		process.env.DEFAULT_HOST = 'example.com';
+		process.env.LOGGING = '//logging.com';
+        var handler = about().json;
+
+        handler({}, res);
+
+        assert.equal(res.content.url, '<a href="//example.com">about-me</a>');
+        assert.equal(res.content.logging, '<a href="//logging.com">//logging.com</a>');
+    });
 
     it('should expose a method to register itself in humane registry', function(done) {
         var params = {url: 'http://example.com', registry: 'http://registry.com?url=http%3A%2F%2Fexample.com'};
