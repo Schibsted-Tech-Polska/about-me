@@ -1,10 +1,11 @@
 {
   "name": "about-me",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Self-introduction express route",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test/*.js"
+    "test": "./node_modules/.bin/mocha test/*.js",
+    "testgrep": "./node_modules/.bin/mocha test/*.js --grep"
   },
   "dependencies": {
     "request": "2.55.0",

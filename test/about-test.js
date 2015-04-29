@@ -29,6 +29,15 @@ describe('About me', function() {
 		assert.deepEqual(res.content, params);
 	});
 
+    it('should be able to create links', function() {
+		var params = {url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'};
+		var handler = about(params).json;
+
+		handler({}, res);
+
+		assert.deepEqual(res.content, params);
+	});
+
     it('shoudl be able to render response as HTML', function() {
 		var params = {url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'};
 		var handler = about(params).html;
@@ -50,7 +59,7 @@ describe('About me', function() {
 
 		handler({}, res);
 
-		assert.deepEqual(res.content, {url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'});
+		assert.deepEqual(res.content, {url: 'http://example.com', repo: '<a href="github.com/Schibsted-Tech-Polska/about-me">git</a>'});
 	});
 
 	it('should use env variables to read env specific params', function() {
@@ -61,10 +70,10 @@ describe('About me', function() {
 
 		handler({}, res);
 
-		assert.deepEqual(res.content, {url: 'http://example.com',
-						  repo: 'github.com/Schibsted-Tech-Polska/about-me',
-						  logging: 'http://logging.com',
-						  monitoring: 'http://monitoring.com'});
+		assert.deepEqual(res.content, {url: '<a href="http://example.com">about-me</a>',
+						  repo: '<a href="github.com/Schibsted-Tech-Polska/about-me">git</a>',
+                          logging: '<a href="http://logging.com">http://logging.com</a>',
+						  monitoring: '<a href="http://monitoring.com">http://monitoring.com</a>'});
 	});
 
     it('should expose a method to register itself in humane registry', function(done) {
