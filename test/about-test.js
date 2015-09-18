@@ -59,7 +59,7 @@ describe('About me', function() {
 
 		handler({}, res);
 
-		assert.deepEqual(res.content, {url: 'http://example.com', repo: '<a href="//github.com/Schibsted-Tech-Polska/about-me">git</a>'});
+		assert.deepEqual(res.content, {url: 'http://example.com', repo: 'github.com/Schibsted-Tech-Polska/about-me'});
 	});
 
 	it('should use env variables to read env specific params', function() {
@@ -71,7 +71,7 @@ describe('About me', function() {
 		handler({}, res);
 
 		assert.deepEqual(res.content, {url: '<a href="http://example.com">about-me</a>',
-						  repo: '<a href="//github.com/Schibsted-Tech-Polska/about-me">git</a>',
+						  repo: 'github.com/Schibsted-Tech-Polska/about-me',
                           logging: '<a href="http://logging.com">http://logging.com</a>',
 						  monitoring: '<a href="http://monitoring.com">http://monitoring.com</a>'});
 	});
